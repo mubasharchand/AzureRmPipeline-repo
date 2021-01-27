@@ -21,7 +21,7 @@ steps:
     location: 'East US'
     templateLocation: 'Linked artifact'
     csmFile: './linkedTemplate.json'
-    overrideParameters: '-Armstorage storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/azure-main.json'
+    overrideParameters: '-pakdevapp storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/azure-main.json'
     deploymentMode: 'Incremental'
     deploymentName: 'DeployPipelineTemplate'
 =======
