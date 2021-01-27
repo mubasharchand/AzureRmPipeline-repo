@@ -6,10 +6,10 @@
 trigger:
 - main
 stages:
-- stage: Build CI
+- stage: Build_CI
   displayName: 'Provision resources to dev environment'
   jobs:
-  - job: Build CI
+  - job: Build_CI
     displayName: 'dev env provisioning job'
 
     pool:
