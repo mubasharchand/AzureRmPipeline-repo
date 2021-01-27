@@ -6,10 +6,10 @@
 trigger:
 - main
 stages:
-- stage: Build_CI
+- stage: Build
   displayName: 'Provision resources to dev environment'
   jobs:
-  - job: Build_CI
+  - job: Build
     displayName: 'dev env provisioning job'
 
     pool:
@@ -23,6 +23,19 @@ stages:
         action: 'Create Or Update Resource Group'
         resourceGroupName: 'development'
         location: 'East US'
+        
+
+- stage: Deploy
+  displayName: 'Provision resources to dev environment'
+  jobs:
+  - job: Build
+    displayName: 'dev env provisioning job'
+
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
         templateLocation: 'Linked artifact'
         csmFile: './azure-main.json'
         overrideParameters: '-devpkApp storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/linkedTemplate.json'
