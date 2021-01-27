@@ -7,13 +7,17 @@ trigger:
 - main
 stages:
 - stage: Build
-  displayName: 'Provision resources to dev environment'
+  displayName: 'Build CI/CD'
   jobs:
-  - job: Build
+  - job: Buildjob
     displayName: 'dev env provisioning job'
 
     pool:
       vmImage: 'ubuntu-latest'
+      variables: 
+        buildplatform: 'Any CPU'
+        buildConfigruation: 'Release'
+
     steps:
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
