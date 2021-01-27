@@ -5,6 +5,7 @@
     {
         "Armstorage": {
             "type": "string",
+            "defaultValue":"storedevops",
             "maxLength":24,
             "minLength":3,
             "metadata": {

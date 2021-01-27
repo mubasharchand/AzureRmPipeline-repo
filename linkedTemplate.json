@@ -58,7 +58,7 @@
         }
       }
     },
-         {
+    {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2018-02-01",
             "name": "[variables('appsevrivceplan')]",
