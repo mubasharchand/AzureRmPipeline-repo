@@ -1,6 +1,6 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+"contentVersion": "1.0.0.0",
   "parameters": {
     "devpkApp": {
       "type": "string",
@@ -32,7 +32,7 @@
     }
   },
   "variables": {
-    "storageAccountName": "[concat(parameters('devpkApp'), uniqueString(resourceGroup().id))]",
+    "Armstorage": "[concat(parameters('devpkApp'), uniqueString(resourceGroup().id))]",
     "webAppName": "[concat(parameters('devpkApp'), 'WebApp')]",
     "appServicePlanName": "[concat(parameters('devpkApp'), 'Plan')]"
   },
@@ -47,8 +47,8 @@
           "uri": "[parameters('linkedTemplateUri')]"
         },
         "parameters": {
-          "storageAccountName": {
-            "value": "[variables('storageAccountName')]"
+          "Armstorage": {
+            "value": "[variables('Armstorage')]"
           },
           "location": {
             "value": "[parameters('location')]"
