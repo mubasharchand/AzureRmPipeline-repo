@@ -10,16 +10,16 @@ pool:
   vmImage: 'ubuntu-latest'
 steps:
   - 
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'AzureRmPipeline-conn'
-    subscriptionId: '75f5dfee-e5f5-4f1a-b126-0b903a8ce713'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'devRmPipeline'
-    location: 'East US'
-    templateLocation: 'Linked artifact'
-    csmFile: './linkedTemplate.json'
-    overrideParameters: '-projectName storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/azure-main.json'
-    deploymentMode: 'Incremental'
-    deploymentName: 'DeployPipelineTemplate'
+  - task: AzureResourceManagerTemplateDeployment@3
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: 'AzureRmPipeline-conn'
+      subscriptionId: '75f5dfee-e5f5-4f1a-b126-0b903a8ce713'
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: 'devRmPipeline'
+      location: 'East US'
+      templateLocation: 'Linked artifact'
+      csmFile: './linkedTemplate.json'
+      overrideParameters: '-projectName storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/azure-main.json'
+      deploymentMode: 'Incremental'
+      deploymentName: 'DeployPipelineTemplate'
