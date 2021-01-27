@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "Armstorage": {
+          "value": "azuredevopsstore" 
+      },
+      "location": {
+          "value": "East US"
+      },
+      "storageSKU": {
+          "value": "Standard_LRS"
+      },
+      "appsevrivceplan": {
+          "value": "devopsApp-plan"
+      },
+      "webApp": {
+          "value": "devops-webapp"
+      },
+      "resourceTags": {
+          "value": {
+             "Environment": "Dev",
+             "Project": "Devpk-Orgnization"
+          }
+      }
+    }
+}
