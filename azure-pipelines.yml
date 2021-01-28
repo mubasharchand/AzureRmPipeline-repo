@@ -55,7 +55,7 @@ stages:
                   resourceGroupName: 'TestIaCPipeline-Dev'
                   location: 'East US'
                   templateLocation: 'Linked artifact'
-                  csmFile: './azure-main.json'
+                  csmFile: '$(Agent.BuildDirectory)/drop/azure-main.json'
                   overrideParameters: '-devpkApp storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/linkedTemplate.json'
                   deploymentMode: 'Incremental'
                   deploymentName: 'DeployPipelineTemplate'
