@@ -76,8 +76,8 @@ stages:
               - task: AzureResourceManagerTemplateDeployment@3
                 inputs:
                   deploymentScope: 'Resource Group'
-                  azureResourceManagerConnection: 'Azure'
-                  subscriptionId: 'befef620-bbb0-446e-8a94-a11b1fdd4c8e'
+                  azureResourceManagerConnection: 'AzureRmPipeline-conn'
+                  subscriptionId: '75f5dfee-e5f5-4f1a-b126-0b903a8ce713'
                   action: 'Create Or Update Resource Group'
                   resourceGroupName: 'IaCPipeline-Test'
                   location: 'Central US'
