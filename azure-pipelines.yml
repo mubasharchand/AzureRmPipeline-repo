@@ -5,21 +5,87 @@
 
 trigger:
 - main
+stages:
+- stage: Build
+  displayName: 'Build CI For ARM-Template'
+  jobs:
+  - job: Buildjob
+    displayName: 'Build CI For ARM-Templat'
 
-pool:
-  vmImage: 'ubuntu-latest'
-steps:
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'AzureRmPipeline-conn'
-    subscriptionId: '75f5dfee-e5f5-4f1a-b126-0b903a8ce713'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'development'
-    location: 'East US'
-    templateLocation: 'Linked artifact'
-    csmFile: './azure-main.json'
-    overrideParameters: '-devpkApp storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/linkedTemplate.json'
-    deploymentMode: 'Incremental'
-    deploymentName: 'DeployPipelineTemplate'
+    pool:
+      vmImage: 'ubuntu-latest'
+      variables: 
+        buildplatform: 'Any CPU'
+        buildConfigruation: 'Release'
+
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
+        
+        
+
+- stage: Dev
+  displayName: 'Deploy to dev'
+  pool:
+    vmImage: 'ubuntu-latest'
+  variables:
+    - group: DevGroup
+  jobs:
+    - deployment: DeployInfrastructure
+      displayName: 'Deploy ARM template'
+      environment: DevEnv
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+             - task: AzureResourceManagerTemplateDeployment@3
+               inputs:
+                  deploymentScope: 'Resource Group'
+                  azureResourceManagerConnection: 'AzureRmPipeline-conn'
+                  subscriptionId: '75f5dfee-e5f5-4f1a-b126-0b903a8ce713'
+                  action: 'Create Or Update Resource Group'
+                  resourceGroupName: 'TestIaCPipeline-Dev'
+                  location: 'East US'
+                  templateLocation: 'Linked artifact'
+                  csmFile: '$(Agent.BuildDirectory)/drop/azure-main.json'
+                  overrideParameters: '-devpkApp storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/linkedTemplate.json'
+                  deploymentMode: 'Incremental'
+                  deploymentName: 'DeployPipelineTemplat'
+- stage: Test
+  displayName: 'Deploy to test'
+  pool:
+    vmImage: 'ubuntu-latest'
+  variables:
+    - group: TestGroup
+  jobs:
+    - deployment: DeployInfrastructure
+      displayName: 'Deploy ARM template'
+      environment: TestEnv
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - task: AzureResourceManagerTemplateDeployment@3
+                inputs:
+                  deploymentScope: 'Resource Group'
+                  azureResourceManagerConnection: 'AzureRmPipeline-conn'
+                  subscriptionId: '75f5dfee-e5f5-4f1a-b126-0b903a8ce713'
+                  action: 'Create Or Update Resource Group'
+                  resourceGroupName: 'IaCPipeline-Test'
+                  location: 'Central US'
+                  templateLocation: 'Linked artifact'
+                  csmFile: '$(Agent.BuildDirectory)/drop/azure-main.json'
+                  csmParametersFile: '$(Agent.BuildDirectory)/drop/azure-main.json'
+                  overrideParameters: '-devpkApp storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/linkedTemplate.json'
+                  deploymentMode: 'Incremental'
+
+
 
