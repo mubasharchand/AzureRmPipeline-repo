@@ -84,7 +84,7 @@ stages:
                   templateLocation: 'Linked artifact'
                   csmFile: '$(Agent.BuildDirectory)/drop/azure-main.json'
                   csmParametersFile: '$(Agent.BuildDirectory)/drop/azure-main.json'
-                  overrideParameters: '-devpkApp storedevops -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/linkedTemplate.json'
+                  overrideParameters: '-devpkApp contosowebapp -linkedTemplateUri https://raw.githubusercontent.com/mubasharchand/AzureRmPipeline-repo/master/linkedTemplate.json'
                   deploymentMode: 'Incremental'
 
 
